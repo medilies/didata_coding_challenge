@@ -55,4 +55,15 @@ class GraphControllerTest extends TestCase
 
         $this->assertDatabaseCount($this->graph->getTable(), 0);
     }
+
+    /** @test */
+    public function index()
+    {
+        Graph::factory()->count(10)->create();
+
+        $this->get(route('graphs.index'))
+            ->assertOk()
+            ->assertJsonCount(10)
+            ->assertJsonStructure(['*' => ['name', 'description']]);
+    }
 }

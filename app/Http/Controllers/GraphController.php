@@ -9,9 +9,11 @@ use Illuminate\Http\Response;
 
 class GraphController extends Controller
 {
-    public function index(): Response
+    public function index(): JsonResponse
     {
-        //
+        $graphs = Graph::select(['name', 'description'])->get();
+
+        return response()->json($graphs->toArray());
     }
 
     public function store(): JsonResponse

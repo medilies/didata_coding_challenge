@@ -21,7 +21,7 @@ class NodeSeeder extends Seeder
             ->count(3)
             ->has(
                 Node::factory()->count(2)->for($graph),
-                'childNode'
+                'childNodes'
             )
             ->for($graph)
             ->create();
