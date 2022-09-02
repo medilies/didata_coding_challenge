@@ -2,29 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Graph;
-use App\Http\Requests\StoreGraphRequest;
 use App\Http\Requests\UpdateGraphRequest;
+use App\Models\Graph;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 
 class GraphController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function index(): Response
     {
         //
     }
@@ -40,26 +25,16 @@ class GraphController extends Controller
         return response()->json($graph->toArray(), 201);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Graph  $graph
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Graph $graph)
+    public function show(Graph $graph): Response
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Graph  $graph
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Graph $graph)
+    public function update(UpdateGraphRequest $request, Graph $graph): JsonResponse
     {
-        //
+        $graph->update($request->safe(['name', 'description']));
+
+        return response()->json($graph->toArray());
     }
 
     /**

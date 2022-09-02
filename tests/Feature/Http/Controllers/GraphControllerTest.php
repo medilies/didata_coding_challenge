@@ -4,12 +4,13 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Graph;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
 class GraphControllerTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, WithFaker;
 
     /** @test */
     public function store()
@@ -20,6 +21,27 @@ class GraphControllerTest extends TestCase
                 fn (AssertableJson $json) => $json->hasAll(['id', 'name', 'description', 'created_at', 'updated_at'])
             );
 
-        $this->assertDatabaseCount((new Graph([]))->getTable(), 1);
+
+    /** @test */
+    public function update()
+    {
+        $graph = Graph::factory(['name' => null, 'description' => null])->create();
+
+        $name = $this->faker->city();
+        $description = $this->faker->text(120);
+
+        $this->patch(
+            route('graphs.update', ['graph' => $graph->id]),
+            compact('name', 'description')
+        )
+            ->assertOk()
+            ->assertJson(
+                fn (AssertableJson $json) => $json->hasAll(['id', 'name', 'description', 'created_at', 'updated_at'])
+            );
+
+        $this->assertDatabaseCount($this->graph->getTable(), 1)
+            ->assertDatabaseHas($this->graph->getTable(), compact('name', 'description') + ['id' => $graph->id]);
+    }
+
     }
 }
