@@ -17,4 +17,6 @@ Route::prefix('v1')->group(function () {
 
         Route::post('parent-node/{parent_node}/child-node/{child_node}/attach', 'attach')->name('nodes.attach');
     });
+
+    Route::apiResource('nodes', NodeController::class)->only('destroy');
 });

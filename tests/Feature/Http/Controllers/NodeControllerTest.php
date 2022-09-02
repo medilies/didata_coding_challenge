@@ -39,4 +39,20 @@ class NodeControllerTest extends TestCase
         $this->assertEquals($parent_node->childNodes->first()->id, $child_node->id);
         $this->assertEquals($child_node->parentNodes->first()->id, $parent_node->id);
     }
+
+    /** @test */
+    public function destroy()
+    {
+        $graph = Graph::factory()->create();
+
+        $nodes = Node::factory()->count(10)->for($graph)->create();
+
+        $node = $nodes->random()->toArray();
+
+        $this->delete(route('nodes.destroy', ['node' => $node['id']]))
+            ->assertOk();
+
+        $this->assertDatabaseCount($this->node->getTable(), 9);
+        $this->assertDatabaseMissing($this->node->getTable(), $node);
+    }
 }
