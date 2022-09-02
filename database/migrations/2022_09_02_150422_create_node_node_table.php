@@ -15,7 +15,12 @@ return new class extends Migration
     {
         Schema::create('node_node', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+
+            $table->unsignedBigInteger('parent_node_id');
+            $table->unsignedBigInteger('child_node_id');
+
+            $table->foreign('parent_node_id')->references('id')->on('nodes');
+            $table->foreign('child_node_id')->references('id')->on('nodes');
         });
     }
 

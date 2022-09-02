@@ -1,3 +1,13 @@
+# Didata Coding Challenge
+
+Graphs in Laravel
+
+## DB
+
+![db](db.png)
+
+## Research
+
 Reaserch terms:
 
 - Directed cyclic Graphs

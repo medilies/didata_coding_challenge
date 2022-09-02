@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('nodes', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+
+            $table->foreignId('graph_id')->constrained();
         });
     }
 
