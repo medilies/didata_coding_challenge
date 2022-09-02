@@ -3,6 +3,7 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Graph;
+use App\Models\Node;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Testing\Fluent\AssertableJson;
@@ -65,5 +66,46 @@ class GraphControllerTest extends TestCase
             ->assertOk()
             ->assertJsonCount(10)
             ->assertJsonStructure(['*' => ['name', 'description']]);
+    }
+
+    /** @test */
+    public function show()
+    {
+        $graph = Graph::factory()->create();
+
+        Node::factory()
+            ->count(random_int(6, 9))
+            ->for($graph)
+            ->has(
+                Node::factory()
+                    ->count(random_int(1, 3))
+                    ->for($graph)
+                    ->has(
+                        Node::factory()
+                            ->for($graph),
+                        'childNodes'
+                    ),
+                'childNodes'
+            )
+            ->create();
+
+        $this->get(route('graphs.show', ['graph' => $graph->id]))
+            ->assertOk()
+            ->assertJsonStructure([
+                'id',
+                'name',
+                'description',
+                'created_at',
+                'updated_at',
+                'nodes' => [
+                    '*' => [
+                        'id',
+                        'graph_id',
+                        'child_nodes',
+                        'parent_nodes',
+                    ],
+                ],
+
+            ]);
     }
 }

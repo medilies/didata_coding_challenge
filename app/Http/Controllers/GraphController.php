@@ -27,9 +27,17 @@ class GraphController extends Controller
         return response()->json($graph->toArray(), 201);
     }
 
-    public function show(Graph $graph): Response
+    public function show(Graph $graph): JsonResponse
     {
-        //
+        $graph->load([
+            'nodes' => [
+                'childNodes',
+                // ! One of these can be considered as an extra query
+                'parentNodes',
+            ],
+        ]);
+
+        return response()->json($graph->toArray());
     }
 
     public function update(UpdateGraphRequest $request, Graph $graph): JsonResponse

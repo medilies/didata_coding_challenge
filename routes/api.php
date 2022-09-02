@@ -17,6 +17,4 @@ Route::prefix('v1')->group(function () {
 
         Route::post('parent-node/{parent_node}/child-node/{child_node}/attach', 'attach')->name('nodes.attach');
     });
-
-    // Route::post('', [NodeController::class, 'dettach'])->name('nodes.dettach');
 });
