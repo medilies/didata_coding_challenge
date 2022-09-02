@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreNodeRequest;
 use App\Http\Requests\UpdateNodeRequest;
+use App\Models\Graph;
 use App\Models\Node;
+use Illuminate\Http\JsonResponse;
 
 class NodeController extends Controller
 {
@@ -18,25 +20,11 @@ class NodeController extends Controller
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function store(StoreNodeRequest $request, Graph $graph): JsonResponse
     {
-        //
-    }
+        $node = $graph->nodes()->create([]);
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreNodeRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreNodeRequest $request)
-    {
-        //
+        return response()->json($node, 201);
     }
 
     /**

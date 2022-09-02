@@ -15,7 +15,7 @@ class GraphControllerTest extends TestCase
     /** @test */
     public function store()
     {
-        $this->post(route('graphs.store', []))
+        $this->post(route('graphs.store'), [])
             ->assertCreated()
             ->assertJson(
                 fn (AssertableJson $json) => $json->hasAll(['id', 'name', 'description', 'created_at', 'updated_at'])
