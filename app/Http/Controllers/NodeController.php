@@ -71,4 +71,11 @@ class NodeController extends Controller
     {
         //
     }
+
+    public function attach(Node $parent_node, Node $child_node)
+    {
+        $parent_node->childNodes()->attach($child_node->id);
+
+        return response(status: 200);
+    }
 }

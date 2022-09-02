@@ -12,5 +12,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix('v1')->group(function () {
     Route::apiResource('graphs', GraphController::class);
 
-    Route::post('gaphs/{graph}', [NodeController::class, 'store'])->name('nodes.create');
+    Route::controller(NodeController::class)->group(function () {
+        Route::post('gaphs/{graph}', 'store')->name('nodes.create');
+
+        Route::post('parent-node/{parent_node}/child-node/{child_node}/attach', 'attach')->name('nodes.attach');
+    });
+
+    // Route::post('', [NodeController::class, 'dettach'])->name('nodes.dettach');
 });
