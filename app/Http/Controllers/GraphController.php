@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Graph;
 use App\Http\Requests\StoreGraphRequest;
 use App\Http\Requests\UpdateGraphRequest;
+use Illuminate\Http\JsonResponse;
 
 class GraphController extends Controller
 {
@@ -28,15 +29,15 @@ class GraphController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreGraphRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreGraphRequest $request)
+    public function store(): JsonResponse
     {
-        //
+        $graph = Graph::create([]);
+
+        // load empty attributes ['name', 'description']
+        $graph->refresh();
+
+        // TODO use eloquent resource
+        return response()->json($graph->toArray(), 201);
     }
 
     /**

@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('graphs', function (Blueprint $table) {
             $table->id();
 
-            $table->string('name')->unique();
-            $table->string('description');
+            $table->string('name')->unique()->nullable();
+            $table->string('description')->nullable();
 
             $table->timestamps();
         });
