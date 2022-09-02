@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Graph;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -14,6 +15,6 @@ class GraphSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Graph::factory()->count(random_int(3, 7))->create();
     }
 }
