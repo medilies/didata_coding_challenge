@@ -37,26 +37,10 @@ class GraphController extends Controller
         return response()->json($graph->toArray());
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateGraphRequest  $request
-     * @param  \App\Models\Graph  $graph
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateGraphRequest $request, Graph $graph)
+    public function destroy(Graph $graph): Response
     {
-        //
-    }
+        $graph->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Graph  $graph
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Graph $graph)
-    {
-        //
+        return response(status: 200);
     }
 }

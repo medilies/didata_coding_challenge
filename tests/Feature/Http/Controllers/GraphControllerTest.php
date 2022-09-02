@@ -21,6 +21,8 @@ class GraphControllerTest extends TestCase
                 fn (AssertableJson $json) => $json->hasAll(['id', 'name', 'description', 'created_at', 'updated_at'])
             );
 
+        $this->assertDatabaseCount($this->graph->getTable(), 1);
+    }
 
     /** @test */
     public function update()
@@ -43,5 +45,14 @@ class GraphControllerTest extends TestCase
             ->assertDatabaseHas($this->graph->getTable(), compact('name', 'description') + ['id' => $graph->id]);
     }
 
+    /** @test */
+    public function destroy()
+    {
+        $graph = Graph::factory()->create();
+
+        $this->delete(route('graphs.destroy', ['graph' => $graph->id]))
+            ->assertOk();
+
+        $this->assertDatabaseCount($this->graph->getTable(), 0);
     }
 }
