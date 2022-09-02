@@ -11,7 +11,6 @@ use Tests\TestCase;
 
 class NodesRelationshipsTest extends TestCase
 {
-
     use RefreshDatabase;
 
     /** @test */

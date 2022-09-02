@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Graph;
 use App\Models\Node;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class NodeSeeder extends Seeder

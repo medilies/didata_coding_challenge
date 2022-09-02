@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Node;
 use App\Http\Requests\StoreNodeRequest;
 use App\Http\Requests\UpdateNodeRequest;
+use App\Models\Node;
 
 class NodeController extends Controller
 {
