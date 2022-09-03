@@ -37,7 +37,7 @@ class NodeController extends Controller
 
     public function attach(Node $parent_node, Node $child_node): Response
     {
-        $parent_node->childNodes()->attach($child_node->id, ['graph_id' => $parent_node->graph->id],);
+        $parent_node->childNodes()->attach($child_node->id, ['graph_id' => $parent_node->graph->id]);
 
         return response(status: 200);
     }

@@ -94,7 +94,7 @@ class GraphControllerTest extends TestCase
         $this->get(route('graphs.show', ['graph' => $graph->id]))
             ->assertOk()
             ->assertJsonStructure([
-                '*' => []
+                '*' => [],
             ]);
     }
 }

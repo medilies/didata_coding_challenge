@@ -13,7 +13,6 @@ class GraphService
     public function __construct(
         private Graph $graphModel
     ) {
-
         $this->setAdjacencyList();
     }
 
@@ -25,7 +24,7 @@ class GraphService
     public function setAdjacencyList(): static
     {
         foreach ($this->graphModel->nodes as $node) {
-            $current_id = (string)$node->id;
+            $current_id = (string) $node->id;
 
             $this->adjacencyList[$current_id] = [];
 
@@ -44,6 +43,6 @@ class GraphService
 
     public function depthFirstTraversal()
     {
-        # code...
+        // code...
     }
 }
