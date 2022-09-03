@@ -11,7 +11,7 @@ class GraphStats extends Command
     protected $signature = 'graph:stats {--gid=}';
 
     /** @var string */
-    protected $description = 'Command description';
+    protected $description = 'Display a graph stats';
 
     /**
      * @return int
@@ -21,6 +21,12 @@ class GraphStats extends Command
         $graph_id = $this->option('gid');
 
         $graph = Graph::select(['name', 'description'])->withCount('nodes', 'relations')->find($graph_id);
+
+        if (is_null($graph)) {
+            $this->error("Failed to find a graph with id={$graph_id}");
+
+            return 0;
+        }
 
         $this->table(
             ['Name', 'Description', 'Number of nodes', 'Number of relations'],

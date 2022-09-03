@@ -11,7 +11,7 @@ class GraphGen extends Command
     protected $signature = 'graph:gen {--nbNodes=}';
 
     /** @var string */
-    protected $description = 'create a random graph with nodes and random relations';
+    protected $description = 'Create a random graph with nodes and random relations';
 
     /**
      * @return int
@@ -25,6 +25,8 @@ class GraphGen extends Command
         dump($graph->toArray());
 
         $this->info('The command was successful!');
+
+        $this->line("Graph id: {$graph->id}");
 
         return 0;
     }

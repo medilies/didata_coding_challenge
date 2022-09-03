@@ -11,16 +11,18 @@ class GraphClear extends Command
     protected $signature = 'graph:clear';
 
     /** @var string */
-    protected $description = 'delete all empty graphs';
+    protected $description = 'Delete all empty graphs';
 
     /**
      * @return int
      */
     public function handle()
     {
-        Graph::doesntHave('nodes')->delete();
+        $count = Graph::doesntHave('nodes')->delete();
 
         $this->info('The command was successful!');
+
+        $this->line("Deleted $count graph(s)");
 
         return 0;
     }

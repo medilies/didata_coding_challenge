@@ -28,6 +28,7 @@ class GraphStatsTest extends TestCase
                         $graph->relations_count,
                     ],
                 ]
-            );
+            )
+            ->assertExitCode(0);
     }
 }
