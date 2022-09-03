@@ -17,8 +17,8 @@ class GraphFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->city(),
-            'description' => $this->faker->text(120),
+            'name' => $this->faker->unique()->city(),
+            'description' => $this->faker->text(60),
         ];
     }
 }

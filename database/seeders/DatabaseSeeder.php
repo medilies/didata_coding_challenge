@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Http\Services\GraphGeneratorService;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -21,9 +23,10 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        $this->call([
-            GraphSeeder::class,
-            NodeSeeder::class,
-        ]);
+        $generator = new GraphGeneratorService;
+
+        for ($i = 0; $i < random_int(6, 9); $i++) {
+            $generator->run(random_int(6, 9));
+        }
     }
 }

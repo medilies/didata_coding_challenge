@@ -12,6 +12,12 @@ class GraphGeneratorService
         return new static();
     }
 
+    /**
+     * Generates a graph with a random amount of graphs
+     * that get randomly connected to each others
+     *
+     * @var int number of nodes
+     */
     public function run(int $nb_nodes): Graph
     {
         $graph = Graph::factory()->create();
