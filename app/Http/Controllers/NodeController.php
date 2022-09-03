@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreNodeRequest;
-use App\Http\Requests\UpdateNodeRequest;
 use App\Models\Graph;
 use App\Models\Node;
 use Illuminate\Http\JsonResponse;
@@ -16,14 +15,6 @@ class NodeController extends Controller
         $node = $graph->nodes()->create([]);
 
         return response()->json($node, 201);
-    }
-
-    /**
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateNodeRequest $request, Node $node)
-    {
-        //
     }
 
     public function destroy(Node $node): Response

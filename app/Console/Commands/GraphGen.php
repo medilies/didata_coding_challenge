@@ -22,11 +22,14 @@ class GraphGen extends Command
 
         $graph = $generator->run($nb_nodes);
 
-        dump($graph->toArray());
-
         $this->info('The command was successful!');
 
         $this->line("Graph id: {$graph->id}");
+
+        $this->table(
+            ['Parent node', 'Child node'],
+            $graph->relations->map(fn ($r) => ['parent_node_id' => $r->parent_node_id, 'child_node_id' => $r->child_node_id])->toArray(),
+        );
 
         return 0;
     }

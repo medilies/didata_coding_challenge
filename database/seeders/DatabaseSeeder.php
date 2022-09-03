@@ -25,8 +25,8 @@ class DatabaseSeeder extends Seeder
 
         $generator = new GraphGeneratorService;
 
-        for ($i = 0; $i < random_int(6, 9); $i++) {
-            $generator->run(random_int(6, 9));
+        for ($i = 0; $i < random_int(5, 7); $i++) {
+            $generator->run(random_int(5, 7));
         }
     }
 }

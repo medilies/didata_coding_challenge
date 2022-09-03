@@ -30,8 +30,8 @@ class GraphControllerTest extends TestCase
     {
         $graph = Graph::factory(['name' => null, 'description' => null])->create();
 
-        $name = $this->faker->city();
-        $description = $this->faker->text(120);
+        $name = $this->faker->unique()->city();
+        $description = $this->faker->text(60);
 
         $this->patch(
             route('graphs.update', ['graph' => $graph->id]),
@@ -73,7 +73,7 @@ class GraphControllerTest extends TestCase
     {
         $graph = Graph::factory()->create();
 
-        GraphGeneratorService::make()->run(random_int(6, 9));
+        GraphGeneratorService::make()->run(random_int(5, 7));
 
         $this->get(route('graphs.show', ['graph' => $graph->id]))
             ->assertOk()
