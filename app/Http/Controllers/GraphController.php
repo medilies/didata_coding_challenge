@@ -67,7 +67,7 @@ class GraphController extends Controller
         foreach ($request->adjacency_list as $node => $children) {
             foreach ($children as $child) {
                 // relationship exists in request but not in DB
-                if (!$graph->relations->where('parent_node_id', $node)->where('child_node_id', $child)->count()) {
+                if (! $graph->relations->where('parent_node_id', $node)->where('child_node_id', $child)->count()) {
                     $new_relations[] = ['parent_node_id' => $node, 'child_node_id' => $child, 'graph_id' => $graph->id];
                 }
             }

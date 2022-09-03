@@ -96,7 +96,7 @@ class GraphControllerTest extends TestCase
 
         $remaining_nodes_ids = $graph->nodes->whereNotIn('id', $deletable_nodes_ids)->map(fn ($n) => $n->id)->toArray();
 
-        $adjacency_list = array_filter($adjacency_list, fn ($children, $key) => !in_array($key, $deletable_nodes_ids), ARRAY_FILTER_USE_BOTH);
+        $adjacency_list = array_filter($adjacency_list, fn ($children, $key) => ! in_array($key, $deletable_nodes_ids), ARRAY_FILTER_USE_BOTH);
 
         foreach ($adjacency_list as $node => $child_nodes) {
             $potential_child = $remaining_nodes_ids[array_rand($remaining_nodes_ids)];
@@ -104,7 +104,7 @@ class GraphControllerTest extends TestCase
             // Delete random relations
             $adjacency_list[$node] = array_filter($adjacency_list[$node], fn ($children) => random_int(1, 5) !== 3);
 
-            if (!in_array($potential_child, $child_nodes)) {
+            if (! in_array($potential_child, $child_nodes)) {
                 // Push one new child
                 $adjacency_list[$node][] = $potential_child;
             }
