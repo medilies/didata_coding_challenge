@@ -16,7 +16,7 @@ class GraphService
         $this->setAdjacencyList();
     }
 
-    public static function make($graphModel)
+    public static function make($graphModel): static
     {
         return new static($graphModel);
     }
