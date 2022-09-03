@@ -16,7 +16,7 @@ class NodeControllerTest extends TestCase
     {
         $graph = Graph::factory()->create();
 
-        $this->post(route('nodes.create', ['graph' => $graph->id]))
+        $this->post(route('nodes.store', ['graph' => $graph->id]))
             ->assertCreated();
 
         $this->assertDatabaseCount($this->graph->getTable(), 1)

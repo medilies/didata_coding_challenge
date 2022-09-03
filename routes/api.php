@@ -13,7 +13,7 @@ Route::prefix('v1')->group(function () {
     Route::apiResource('graphs', GraphController::class);
 
     Route::controller(NodeController::class)->group(function () {
-        Route::post('gaphs/{graph}', 'store')->name('nodes.create');
+        Route::post('gaphs/{graph}', 'store')->name('nodes.store');
 
         Route::post('parent-node/{parent_node}/child-node/{child_node}/attach', 'attach')->name('nodes.attach');
     });
