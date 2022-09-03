@@ -41,4 +41,9 @@ class GraphService
     {
         return $this->adjacencyList;
     }
+
+    public function depthFirstTraversal()
+    {
+        # code...
+    }
 }

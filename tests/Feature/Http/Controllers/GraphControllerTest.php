@@ -76,15 +76,17 @@ class GraphControllerTest extends TestCase
         Node::factory()
             ->count(random_int(6, 9))
             ->for($graph)
-            ->has(
+            ->hasAttached(
                 Node::factory()
                     ->count(random_int(1, 3))
                     ->for($graph)
-                    ->has(
+                    ->hasAttached(
                         Node::factory()
                             ->for($graph),
+                        ['graph_id' => $graph->id],
                         'childNodes'
                     ),
+                ['graph_id' => $graph->id],
                 'childNodes'
             )
             ->create();

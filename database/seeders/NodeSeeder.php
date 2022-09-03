@@ -19,8 +19,9 @@ class NodeSeeder extends Seeder
 
         Node::factory()
             ->count(3)
-            ->has(
+            ->hasAttached(
                 Node::factory()->count(2)->for($graph),
+                ['graph_id' => $graph->id],
                 'childNodes'
             )
             ->for($graph)

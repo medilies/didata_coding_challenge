@@ -18,9 +18,11 @@ return new class extends Migration
 
             $table->unsignedBigInteger('parent_node_id');
             $table->unsignedBigInteger('child_node_id');
+            $table->unsignedBigInteger('graph_id');
 
-            $table->foreign('parent_node_id')->references('id')->on('nodes');
-            $table->foreign('child_node_id')->references('id')->on('nodes');
+            $table->foreign('parent_node_id')->references('id')->on('nodes')->cascadeOnDelete();
+            $table->foreign('child_node_id')->references('id')->on('nodes')->cascadeOnDelete();
+            $table->foreign('graph_id')->references('id')->on('graphs')->cascadeOnDelete();
         });
     }
 
