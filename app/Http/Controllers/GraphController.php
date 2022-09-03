@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateGraphRequest;
+use App\Http\Services\GraphService;
 use App\Models\Graph;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
@@ -32,12 +33,10 @@ class GraphController extends Controller
         $graph->load([
             'nodes' => [
                 'childNodes',
-                // ! One of these can be considered as an extra query
-                'parentNodes',
             ],
         ]);
 
-        return response()->json($graph->toArray());
+        return response()->json(GraphService::make($graph)->getAdjacencyList());
     }
 
     public function update(UpdateGraphRequest $request, Graph $graph): JsonResponse
