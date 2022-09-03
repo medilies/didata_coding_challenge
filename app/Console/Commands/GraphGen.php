@@ -2,8 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Graph;
-use App\Models\Node;
+use App\Http\Services\GraphGeneratorService;
 use Illuminate\Console\Command;
 
 class GraphGen extends Command
@@ -27,19 +26,13 @@ class GraphGen extends Command
      *
      * @return int
      */
-    public function handle()
+    public function handle(GraphGeneratorService $generator)
     {
         $nb_nodes = $this->option('nbNodes');
 
-        $graph = Graph::factory()->create();
+        $graph = $generator->run($nb_nodes);
 
-        $nodes = Node::factory()->count($nb_nodes)->for($graph)->create();
-
-        foreach ($nodes as $key => $node) {
-            foreach ($nodes->except($key)->random(random_int(0, $nb_nodes - 1)) as $child_node) {
-                $node->childNodes()->attach($child_node->id, ['graph_id' => $graph->id]);
-            }
-        }
+        dump($graph->toArray());
 
         $this->info('The command was successful!');
     }

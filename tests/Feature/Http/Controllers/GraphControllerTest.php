@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Http\Services\GraphGeneratorService;
 use App\Models\Graph;
-use App\Models\Node;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Testing\Fluent\AssertableJson;
@@ -73,23 +73,7 @@ class GraphControllerTest extends TestCase
     {
         $graph = Graph::factory()->create();
 
-        Node::factory()
-            ->count(random_int(6, 9))
-            ->for($graph)
-            ->hasAttached(
-                Node::factory()
-                    ->count(random_int(1, 3))
-                    ->for($graph)
-                    ->hasAttached(
-                        Node::factory()
-                            ->for($graph),
-                        ['graph_id' => $graph->id],
-                        'childNodes'
-                    ),
-                ['graph_id' => $graph->id],
-                'childNodes'
-            )
-            ->create();
+        GraphGeneratorService::make()->run(random_int(6, 9));
 
         $this->get(route('graphs.show', ['graph' => $graph->id]))
             ->assertOk()
