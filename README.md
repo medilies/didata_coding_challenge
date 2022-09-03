@@ -15,14 +15,18 @@ git clone https://github.com/medilies/didata_coding_challenge
 ```
 
 ```shell
-composer install
+cd didata_coding_challenge
 ```
 
-- create a database
+```shell
+composer install
+```
 
 ```shell
  cp .\.env.example .\.env
 ```
+
+- create a database and fill its credentials in `.env`
 
 ```shell
 php artisan key:generate

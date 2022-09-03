@@ -110,7 +110,7 @@ class GraphControllerTest extends TestCase
             }
         }
 
-        $this->post(route('graph.shape', ['graph' => $graph->id]), compact('deletable_nodes_ids', 'adjacency_list'))
+        $this->put(route('graph.shape', ['graph' => $graph->id]), compact('deletable_nodes_ids', 'adjacency_list'))
             ->assertOk();
 
         $this->assertEquals(Node::whereIn('id', $deletable_nodes_ids)->count(), 0);

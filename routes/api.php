@@ -12,7 +12,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix('v1')->group(function () {
     Route::apiResource('graphs', GraphController::class);
 
-    Route::post('gaphs/{graph}/shape', [GraphController::class, 'shape'])->name('graph.shape');
+    Route::put('gaphs/{graph}/shape', [GraphController::class, 'shape'])->name('graph.shape');
 
     Route::controller(NodeController::class)->group(function () {
         Route::post('gaphs/{graph}', 'store')->name('nodes.store');
