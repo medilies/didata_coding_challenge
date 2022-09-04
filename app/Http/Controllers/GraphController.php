@@ -90,7 +90,10 @@ class GraphController extends Controller
 
         foreach ($graph->relations as $relations) {
             // Relation exists in DB but not in request => Delete
-            if (empty($request->adjacency_list[$relations->parent_node_id][$relations->child_node_id])) {
+            if (
+                empty($request->adjacency_list[$relations->parent_node_id]) ||
+                ! in_array($relations->child_node_id, $request->adjacency_list[$relations->parent_node_id])
+            ) {
                 $delete_query->orWhere(function ($query) use ($relations) {
                     $query->Where('parent_node_id', $relations->parent_node_id)
                         ->where('child_node_id', $relations->child_node_id);

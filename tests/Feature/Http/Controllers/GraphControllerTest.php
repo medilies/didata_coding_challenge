@@ -87,32 +87,51 @@ class GraphControllerTest extends TestCase
     /** @test */
     public function shape()
     {
-        $graph = GraphGeneratorService::make()->run(random_int(5, 7));
+        $nodes_count = random_int(5, 9);
+
+        $deletable_nodes_count = random_int(2, 4);
+
+        $graph = GraphGeneratorService::make()->run($nodes_count);
+
+        $temp_graph = GraphGeneratorService::make()->run($nodes_count - $deletable_nodes_count);
 
         $adjacency_list = GraphService::make($graph)->getAdjacencyList();
 
+        $temp_adjacency_list = GraphService::make($temp_graph)->getAdjacencyList();
+
+        $temp_graph->delete();
+
         // * select random nodes ids to delete
-        $deletable_nodes_ids = $graph->nodes->random(random_int(2, 3))->map(fn ($n) => $n->id)->toArray();
+        $deletable_nodes_ids = $graph->nodes->random($deletable_nodes_count)->map(fn ($n) => $n->id)->toArray();
 
-        $remaining_nodes_ids = $graph->nodes->whereNotIn('id', $deletable_nodes_ids)->map(fn ($n) => $n->id)->toArray();
+        $new_adjacency_list = [];
 
-        $adjacency_list = array_filter($adjacency_list, fn ($children, $key) => ! in_array($key, $deletable_nodes_ids), ARRAY_FILTER_USE_BOTH);
+        foreach ($adjacency_list as $node => $x) {
+            if (in_array($node, $deletable_nodes_ids)) {
+                continue;
+            }
 
-        foreach ($adjacency_list as $node => $child_nodes) {
-            $potential_child = $remaining_nodes_ids[array_rand($remaining_nodes_ids)];
+            $new_adjacency_list[(string) $node] = [];
 
-            // Delete random relations
-            $adjacency_list[$node] = array_filter($adjacency_list[$node], fn ($children) => random_int(1, 5) !== 3);
+            foreach (array_pop($temp_adjacency_list) as $child) {
+                $child -= $nodes_count;
 
-            if (! in_array($potential_child, $child_nodes)) {
-                // Push one new child
-                $adjacency_list[$node][] = $potential_child;
+                if (in_array($child, $deletable_nodes_ids)) {
+                    continue;
+                }
+                $new_adjacency_list[(string) $node][] = $child;
             }
         }
 
-        $this->put(route('graph.shape', ['graph' => $graph->id]), compact('deletable_nodes_ids', 'adjacency_list'))
+        $this->put(route('graph.shape', ['graph' => $graph->id]), compact('deletable_nodes_ids') + ['adjacency_list' => $new_adjacency_list])
             ->assertOk();
 
         $this->assertEquals(Node::whereIn('id', $deletable_nodes_ids)->count(), 0);
+
+        foreach ($new_adjacency_list as $node => $children) {
+            foreach ($children as $child) {
+                $this->assertDatabaseHas('node_node', ['parent_node_id' => $node, 'child_node_id' => $child]);
+            }
+        }
     }
 }

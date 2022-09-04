@@ -51,23 +51,4 @@ class NodesRelationshipsTest extends TestCase
 
         $this->assertEquals($node->id, --$node->childNodes()->first()->id);
     }
-
-    /** @test */
-    public function nodes2_factory_test()
-    {
-        $graph = Graph::factory()->create();
-
-        $node = Node::factory()
-            ->for($graph)
-            ->create();
-
-        // $child_node = Node::factory()
-        //     ->for($graph)
-        //     ->for($node, 'parentNodes')
-        //     ->create();
-
-        // $this->assertDatabaseCount('nodes', 2);
-
-        // $this->assertEquals($node->id, --$node->childNodes()->first()->id);
-    }
 }
