@@ -106,10 +106,6 @@ class GraphControllerTest extends TestCase
 
         $new_adjacency_list = [];
 
-        // dump('======Original:', $adjacency_list, '=========');
-        // dump('------update source:', $temp_adjacency_list, '---------');
-        dump('------DELETE:', $deletable_nodes_ids, '---------');
-
         foreach ($adjacency_list as $node => $x) {
             if (in_array($node, $deletable_nodes_ids)) {
                 continue;
@@ -126,8 +122,6 @@ class GraphControllerTest extends TestCase
                 $new_adjacency_list[(string) $node][] = $child;
             }
         }
-
-        dump('------updated:', $new_adjacency_list, '---------');
 
         $this->put(route('graph.shape', ['graph' => $graph->id]), compact('deletable_nodes_ids') + ['adjacency_list' => $new_adjacency_list])
             ->assertOk();
