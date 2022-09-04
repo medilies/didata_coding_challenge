@@ -16,10 +16,10 @@ class Relation extends Model
 
     protected $guarded = [];
 
-    public function graph(): BelongsTo
-    {
-        return $this->belongsTo(Graph::class);
-    }
+    // public function graph(): BelongsTo
+    // {
+    //     return $this->belongsTo(Graph::class);
+    // }
 
     public function parentNodes(): BelongsTo
     {

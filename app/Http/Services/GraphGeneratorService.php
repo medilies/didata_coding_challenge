@@ -26,7 +26,7 @@ class GraphGeneratorService
 
         foreach ($nodes as $key => $node) {
             foreach ($nodes->except($key)->random(random_int(0, $nb_nodes - 1)) as $child_node) {
-                $node->childNodes()->attach($child_node->id, ['graph_id' => $graph->id]);
+                $node->childNodes()->attach($child_node->id);
             }
         }
 
