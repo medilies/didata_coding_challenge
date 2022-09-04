@@ -32,6 +32,10 @@ composer install
 php artisan key:generate
 ```
 
+```shell
+php artisan migrate
+```
+
 ## Commands
 
 Create a random graph with nodes and random relations
