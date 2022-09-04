@@ -29,9 +29,7 @@ class NodeControllerTest extends TestCase
     {
         $graph = Graph::factory()->create();
 
-        $nodes = Node::factory()->count(10)->for($graph)->create();
-
-        [$parent_node, $child_node] = $nodes->random(2);
+        [$parent_node, $child_node] = Node::factory()->count(10)->for($graph)->create()->random(2);
 
         $this->post(route('nodes.attach', ['parent_node' => $parent_node->id, 'child_node' => $child_node->id]))
             ->assertOk();
@@ -45,14 +43,12 @@ class NodeControllerTest extends TestCase
     {
         $graph = Graph::factory()->create();
 
-        $nodes = Node::factory()->count(10)->for($graph)->create();
+        $node = Node::factory()->count(10)->for($graph)->create()->random();
 
-        $node = $nodes->random()->toArray();
-
-        $this->delete(route('nodes.destroy', ['node' => $node['id']]))
+        $this->delete(route('nodes.destroy', ['node' => $node->id]))
             ->assertOk();
 
         $this->assertDatabaseCount($this->node->getTable(), 9);
-        $this->assertDatabaseMissing($this->node->getTable(), $node);
+        $this->assertDatabaseMissing($this->node->getTable(), $node->toArray());
     }
 }

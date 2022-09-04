@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreNodeRequest;
 use App\Models\Graph;
 use App\Models\Node;
 use Illuminate\Http\JsonResponse;
@@ -10,9 +9,9 @@ use Illuminate\Http\Response;
 
 class NodeController extends Controller
 {
-    public function store(StoreNodeRequest $request, Graph $graph): JsonResponse
+    public function store(Graph $graph): JsonResponse
     {
-        $node = $graph->nodes()->create([]);
+        $node = $graph->nodes()->create();
 
         return response()->json($node, 201);
     }

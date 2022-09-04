@@ -2,8 +2,6 @@
 
 namespace Tests\Feature;
 
-// use Illuminate\Foundation\Testing\RefreshDatabase;
-
 use App\Models\Graph;
 use App\Models\Node;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -23,8 +21,6 @@ class NodesRelationshipsTest extends TestCase
         $child_node = $node->childNodes()->create(['graph_id' => $graph->id], ['graph_id' => $graph->id]);
 
         $this->assertDatabaseCount('nodes', 2);
-
-        // dump(Node::with(['childNodes', 'parentNodes'])->get()->toArray());
 
         $this->assertEquals($node->id, $child_node->id - 1);
 
@@ -49,25 +45,6 @@ class NodesRelationshipsTest extends TestCase
 
         $this->assertDatabaseCount('nodes', 2);
 
-        $this->assertEquals($node->id, --$node->childNodes()->first()->id);
-    }
-
-    /** @test */
-    public function nodes2_factory_test()
-    {
-        $graph = Graph::factory()->create();
-
-        $node = Node::factory()
-            ->for($graph)
-            ->create();
-
-        // $child_node = Node::factory()
-        //     ->for($graph)
-        //     ->for($node, 'parentNodes')
-        //     ->create();
-
-        // $this->assertDatabaseCount('nodes', 2);
-
-        // $this->assertEquals($node->id, --$node->childNodes()->first()->id);
+        $this->assertEquals($node->id, $node->childNodes()->first()->id - 1);
     }
 }

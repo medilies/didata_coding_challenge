@@ -73,9 +73,7 @@ class GraphControllerTest extends TestCase
     /** @test */
     public function show()
     {
-        $graph = Graph::factory()->create();
-
-        GraphGeneratorService::make()->run(random_int(5, 7));
+        $graph = GraphGeneratorService::make()->run(random_int(5, 7));
 
         $this->get(route('graphs.show', ['graph' => $graph->id]))
             ->assertOk()
@@ -102,7 +100,7 @@ class GraphControllerTest extends TestCase
             $potential_child = $remaining_nodes_ids[array_rand($remaining_nodes_ids)];
 
             // Delete random relations
-            $adjacency_list[$node] = array_filter($adjacency_list[$node], fn ($children) => random_int(1, 5) !== 3);
+            $adjacency_list[$node] = array_filter($adjacency_list[$node], fn () => random_int(1, 5) !== 3);
 
             if (! in_array($potential_child, $child_nodes)) {
                 // Push one new child
