@@ -18,7 +18,7 @@ class NodesRelationshipsTest extends TestCase
 
         $node = $graph->nodes()->create();
 
-        $child_node = $node->childNodes()->create(['graph_id' => $graph->id], ['graph_id' => $graph->id]);
+        $child_node = $node->childNodes()->create(['graph_id' => $graph->id]);
 
         $this->assertDatabaseCount('nodes', 2);
 
@@ -36,9 +36,8 @@ class NodesRelationshipsTest extends TestCase
 
         $node = Node::factory()
             ->for($graph)
-            ->hasAttached(
+            ->has(
                 Node::factory()->for($graph),
-                ['graph_id' => $graph->id],
                 'childNodes'
             )
             ->create();

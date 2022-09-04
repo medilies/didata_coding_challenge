@@ -82,7 +82,6 @@ class GraphController extends Controller
                     $new_relations[] = [
                         'parent_node_id' => $node,
                         'child_node_id' => $child,
-                        'graph_id' => $graph->id,
                     ];
                 }
             }
